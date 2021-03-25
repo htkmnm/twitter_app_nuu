@@ -68,3 +68,5 @@ export const googleLogin = async () => {
             // ...
         });
 };
+
+export default firebase
