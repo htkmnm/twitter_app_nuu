@@ -4,9 +4,19 @@ import { useHistory, Link } from 'react-router-dom'
 import { googleLogin } from '../config/firebase';
 import firebase from '../config/firebase';
 import TextField from '@material-ui/core/TextField';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            color: theme.palette.text.primary,
+        },
+    }),
+);
 
 const Login = () => {
+    const classes = useStyles();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,8 +55,10 @@ const Login = () => {
             <button onClick={handleGoogle}>Google Login</button>
             <button onClick={clickButton}>Login</button>
             <Link to='/Create'>アカウント作成</Link>
+            <TwitterIcon />
         </div>
+
+
     );
 };
-
 export default Login;
