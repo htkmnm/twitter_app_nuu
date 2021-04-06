@@ -1,7 +1,8 @@
 import React from 'react';
+import './Login.css';
 import { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
-import { googleLogin } from '../config/firebase';
+import { googleLogin, emailVerification } from '../config/firebase';
 import firebase from '../config/firebase';
 import TextField from '@material-ui/core/TextField';
 
@@ -15,8 +16,9 @@ const Login = () => {
 
     const handleGoogle = async () => {
         await googleLogin()
-        history.push('/Main')
+        await emailVerification()
         console.log('googlelogin')
+        history.push('/Main')
     }
 
     const clickButton = () => {
@@ -40,13 +42,18 @@ const Login = () => {
     }
 
     return (
-        <div>
-            <TextField id="email" label="email" value={email} onChange={e => setEmail(e.target.value)} /><br />
-            <TextField id="password" label="password" value={password} onChange={e => setPassword(e.target.value)} /><br />
-            <button onClick={handleGoogle}>Google Login</button>
-            <button onClick={clickButton}>Login</button>
-            <Link to='/ResetPassword'>パスワードをお忘れの方</Link>
-            <Link to='/Create'>アカウント作成</Link>
+        <div className='Main'>
+            <div className='Left'>
+                <img src="" alt="" />
+            </div>
+            <div className='Right'>
+                <TextField id="email" label="email" value={email} onChange={e => setEmail(e.target.value)} /><br />
+                <TextField id="password" label="password" value={password} onChange={e => setPassword(e.target.value)} /><br />
+                <button onClick={handleGoogle}>Google Login</button>
+                <button onClick={clickButton}>Login</button>
+                <Link to='/ResetPassword'>パスワードをお忘れの方</Link>
+                <Link to='/Create'>アカウント作成</Link>
+            </div>
         </div>
     );
 };
