@@ -15,6 +15,7 @@ const Login = () => {
 
     const handleGoogle = async () => {
         await googleLogin()
+        history.push('/Main')
         console.log('googlelogin')
     }
 
@@ -44,6 +45,7 @@ const Login = () => {
             <TextField id="password" label="password" value={password} onChange={e => setPassword(e.target.value)} /><br />
             <button onClick={handleGoogle}>Google Login</button>
             <button onClick={clickButton}>Login</button>
+            <Link to='/ResetPassword'>パスワードをお忘れの方</Link>
             <Link to='/Create'>アカウント作成</Link>
         </div>
     );
