@@ -1,6 +1,6 @@
-import React from 'react'
-import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React from 'react';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import firebase from '../config/firebase';
 import TextField from '@material-ui/core/TextField';
 
@@ -26,6 +26,6 @@ function Create() {
             <button onClick={handleClick}>CREATE USER</button>
         </div>
     )
-}
+};
 
-export default Create
+export default Create;
