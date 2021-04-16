@@ -14,10 +14,10 @@ const ResetPassword = () => {
         history.push('/')
     };
 
+
     const resetPassword = () => {
-        var auth = firebase.auth();
-        var emailAddress = "noreply@twitter-app-nuu.firebaseapp.com"
-        console.log(email)
+        const auth = firebase.auth();
+        const emailAddress = "user@example.com";
 
         auth.sendPasswordResetEmail(emailAddress)
             .then(function () {
@@ -27,6 +27,7 @@ const ResetPassword = () => {
             .catch(function (error) {
                 // An error happened.
                 var errorCode = error.code;
+                console.log(error.code)
             });
     };
 

@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import firebase from '../config/firebase';
+import { emailVerification } from '../config/firebase';
 import TextField from '@material-ui/core/TextField';
 
 function Create() {
@@ -14,6 +15,7 @@ function Create() {
     const handleClick = () => {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(() => {
+                emailVerification()
                 console.log('succes createUser')
                 history.push('/')
             })
