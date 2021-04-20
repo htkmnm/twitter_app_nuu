@@ -64,6 +64,19 @@ export const emailVerification = async () => {
     });
 }
 
+export const resetPassword = async () => {
+    var auth = firebase.auth();
+    var emailAddress = "noreply@twitter-app-nuu.firebaseapp.com"
 
+    auth.sendPasswordResetEmail(emailAddress)
+        .then(function () {
+            console.log("email sent")
+            // Email sent.
+        })
+        .catch(function (error) {
+            // An error happened.
+            var errorCode = error.code;
+        });
+};
 
-export default firebase
+export default firebase;
