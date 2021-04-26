@@ -43,15 +43,16 @@ export const googleLogin = async () => {
         })
 };
 
-export const userCurrent = async () => {
-    firebase.auth().onAuthStateChanged(function (user) {
-        var user = firebase.auth().currentUser;
-        if (user) {
-            // User is signed in.
-        } else {
-            // No user is signed in.
-        }
-    });
+//Logout機能
+export const userLogout = async () => {
+    firebase.auth()
+        .signOut()
+        .then(() => {
+            console.log('Logout')
+            // Sign-out successful.
+        }).catch((error) => {
+            // An error happened.
+        });
 }
 
 //Login確認メール
