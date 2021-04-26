@@ -1,13 +1,10 @@
 import React from 'react';
 import './Login.css';
-import { useState } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useState } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 import { googleLogin, emailVerification } from '../config/firebase';
 import firebase from '../config/firebase';
 import TextField from '@material-ui/core/TextField';
-import { createInputFiles } from 'typescript';
-import { SettingsRemote } from '@material-ui/icons';
-
 
 const Login = () => {
 
@@ -23,8 +20,9 @@ const Login = () => {
         await emailVerification()
         console.log('googlelogin')
         history.push('/Main')
-    }
+    };
 
+    //email,password Signin機能
     const clickButton = () => {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(() => {
@@ -43,7 +41,9 @@ const Login = () => {
                     alert('このユーザーは無効です。')
                 }
             });
-    }
+    };
+
+    //画像、動画　アップロード機能
     const inputFile = (files: FileList | null) => {
         const S =
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -81,7 +81,8 @@ const Login = () => {
                 });
             }
         )
-    }
+    };
+
     return (
         <div className='Main'>
             <div className='Left'>
@@ -99,6 +100,7 @@ const Login = () => {
             </div>
         </div>
     );
+
 };
 
 export default Login;
