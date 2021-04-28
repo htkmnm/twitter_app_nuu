@@ -26,6 +26,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 export const db = firebase.firestore();
 
+firebase.firestore().settings({
+    ignoreUndefinedProperties: true,
+})
+
 //GoogleLogin機能
 const provider = new firebase.auth.GoogleAuthProvider();
 export const googleLogin = async () => {
@@ -76,6 +80,40 @@ export const resetPassword = async (emailAddress: string) => {
             console.log("email sent")
             // Email sent.
         })
+};
+
+export const sendMessage = async (name: any[], message: string[]) => {
+    await db
+        .collection("messages")
+        .doc('tweet')
+        .collection('comment')
+        .add({
+            name,
+            message,
+            createAt: new Date()
+        })
+        .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+            console.error("Error adding document: ", error);
+        });
+};
+
+export const readData = async () => {
+    await db
+        .collection('messages')
+        .doc('tweet')
+        .collection('tweet')
+        .get()
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                console.log(doc.id, " => ", doc.data());
+            });
+        })
+        .catch(function (error) {
+            console.log("Error getting documents: ", error);
+        });
 };
 
 export default firebase;
