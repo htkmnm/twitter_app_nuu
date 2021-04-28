@@ -7,8 +7,8 @@ import TextField from '@material-ui/core/TextField';
 
 function Create() {
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const history = useHistory();
 
@@ -28,6 +28,7 @@ function Create() {
             <button onClick={handleClick}>CREATE USER</button>
         </div>
     )
+
 };
 
 export default Create;

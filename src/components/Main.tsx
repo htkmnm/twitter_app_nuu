@@ -6,12 +6,34 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Main'
 import 'firebase/firestore';
 import firebase from '../config/firebase';
+import { useHistory } from 'react-router-dom'
+import { userLogout } from '../config/firebase';
 
 const Main = ({ name }: any) => {
     const [string, setString] = useState<any>('');
     const [tweet, setTweet] = useState<any>();
     const inputEl = useRef<any>(null);
     const [item, setItem] = useState<File | null>(null);
+    const [username, setUsername] = useState<string | null>('');
+    const history = useHistory();
+
+    const logout = async () => {
+        userLogout()
+        history.push('/')
+    };
+    
+    useEffect(() => {
+        //LoginuserNameの表示
+        firebase.auth().onAuthStateChanged(function (user) {
+            var user = firebase.auth().currentUser;
+            console.log(user?.displayName)
+            if (user) {
+                setUsername(user?.displayName)
+            } else {
+                // No user is signed in.
+            }
+        });
+    });
 
     const handleClick = async () => {
         sendMessage(name, string)
@@ -95,6 +117,16 @@ const Main = ({ name }: any) => {
                     );
                 })}
             </main>
+        <div className='header'>
+                <h1>Nuu.Main</h1>
+            </div>
+            <div className='main'>
+                {username}
+                <button onClick={logout}>Logout</button>
+            </div>
+            <div className='footer'>
+
+            </div>
         </div>
     )
 };
