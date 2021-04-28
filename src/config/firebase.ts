@@ -1,6 +1,6 @@
-import firebase from 'firebase/app'
-import "firebase/firestore"
-import "firebase/auth"
+import firebase from 'firebase/app';
+import "firebase/firestore";
+import "firebase/auth";
 import 'firebase/storage';
 
 const {
@@ -24,7 +24,10 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig)
-const db = firebase.firestore();
+export const db = firebase.firestore();
+firebase.firestore().settings({
+    ignoreUndefinedProperties: true,
+})
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -76,6 +79,40 @@ export const resetPassword = async () => {
         .catch(function (error) {
             // An error happened.
             var errorCode = error.code;
+        });
+};
+
+export const sendMessage = async (name: any[], message: string[]) => {
+    await db
+        .collection("messages")
+        .doc('tweet')
+        .collection('comment')
+        .add({
+            name,
+            message,
+            createAt: new Date()
+        })
+        .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+            console.error("Error adding document: ", error);
+        });
+};
+
+export const readData = async () => {
+    await db
+        .collection('messages')
+        .doc('tweet')
+        .collection('tweet')
+        .get()
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                console.log(doc.id, " => ", doc.data());
+            });
+        })
+        .catch(function (error) {
+            console.log("Error getting documents: ", error);
         });
 };
 
