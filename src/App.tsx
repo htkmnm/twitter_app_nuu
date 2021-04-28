@@ -7,8 +7,8 @@ import SimpleModal from './components/SimpleModal';
 import Create from './components/Create';
 import ResetPassword from './components/ResetPassword';
 
-
 function App() {
+
   return (
     <div>
       <Router>
@@ -22,6 +22,7 @@ function App() {
       </Router>
     </div>
   );
-}
+
+};
 
 export default App;

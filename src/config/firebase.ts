@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import "firebase/firestore";
 import "firebase/auth";
-import "firebase/storage";
+import 'firebase/storage';
 
 const {
     REACT_APP_FIREBASE_APIKEY,
@@ -24,16 +24,15 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig)
-const db = firebase.firestore();
+export const db = firebase.firestore();
 
+//GoogleLogin機能
 const provider = new firebase.auth.GoogleAuthProvider();
-
 export const googleLogin = async () => {
     firebase.auth()
         .signInWithPopup(provider)
         .then((result) => {
             /** @type {firebase.auth.OAuthCredential} */
-            var credential = result.credential;
 
             // This gives you a Google Access Token. You can use it to access the Google API.
 
@@ -41,18 +40,22 @@ export const googleLogin = async () => {
             var user = result.user;
             console.log(user?.displayName)
             // ...
-        }).catch((error) => {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-        });
+        })
 };
 
+//Logout機能
+export const userLogout = async () => {
+    firebase.auth()
+        .signOut()
+        .then(() => {
+            console.log('Logout')
+            // Sign-out successful.
+        }).catch((error) => {
+            // An error happened.
+        });
+}
+
+//Login確認メール
 export const emailVerification = async () => {
     const user = firebase.auth().currentUser;
 
@@ -62,21 +65,17 @@ export const emailVerification = async () => {
     }).catch(function (error) {
         // An error happened.
     });
-}
+};
 
-export const resetPassword = async () => {
+//password再設定
+export const resetPassword = async (emailAddress: string) => {
     var auth = firebase.auth();
-    var emailAddress = "noreply@twitter-app-nuu.firebaseapp.com"
 
     auth.sendPasswordResetEmail(emailAddress)
         .then(function () {
             console.log("email sent")
             // Email sent.
         })
-        .catch(function (error) {
-            // An error happened.
-            var errorCode = error.code;
-        });
 };
 
 export default firebase;

@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 
 const ResetPassword = () => {
 
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState<string>('');
     const history = useHistory();
 
     const back = () => {
@@ -15,7 +15,7 @@ const ResetPassword = () => {
     };
 
     const sendEmail = async () => {
-        await resetPassword()
+        await resetPassword(email)
         console.log(email)
     };
 
@@ -26,6 +26,7 @@ const ResetPassword = () => {
             <Button variant="outlined" value={email} onClick={sendEmail}>変更</Button>
         </div>
     );
+
 };
 
 export default ResetPassword;

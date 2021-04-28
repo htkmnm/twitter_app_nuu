@@ -2,6 +2,11 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import './Login.css';
+import { useState } from 'react';
+import { useHistory, Link } from 'react-router-dom';
+import { googleLogin, emailVerification } from '../config/firebase';
+import firebase from '../config/firebase';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -31,7 +36,6 @@ function Copyright() {
         </Typography>
     );
 }
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,6 +68,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const Login = () => {
+
 export default function SignInSide() {
 
     const classes = useStyles();
@@ -72,15 +78,18 @@ export default function SignInSide() {
     const [password, setPassword] = useState('')
     const cleate = () => { history.push('/Create') }
 
-    const history = useHistory()
+    const [item, setItem] = useState<File | null>(null);
+
+    const history = useHistory();
 
     const handleGoogle = async () => {
         await googleLogin()
         await emailVerification()
         console.log('googlelogin')
         history.push('/Main')
-    }
+    };
 
+    //email,password Signin機能
     const clickButton = () => {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(() => {
@@ -102,7 +111,47 @@ export default function SignInSide() {
                     console.log(error)
                 }
             });
-    }
+    };
+
+    //画像、動画　アップロード機能
+    const inputFile = (files: FileList | null) => {
+        const S =
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const N = 16;
+        const randomChar =
+            Array.from(crypto.getRandomValues(new Uint32Array(N)))
+                .map((n) => S[n % S.length])
+                .join('');
+        const fileName = randomChar + '_' + item?.name;
+        const uploadItem = firebase
+            .storage()
+            .ref(`images`)
+            .child(fileName)
+            .put(item!);
+        const file: File = files![0];
+        setItem(file);
+
+        uploadItem.on(
+            firebase.storage.TaskEvent.STATE_CHANGED,
+            function () {
+                console.log('uploading...')
+            },
+            function (error) {
+                console.log(error.message)
+            },
+            function () {
+                uploadItem.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                    console.log('File available at', downloadURL);
+                    firebase.firestore().collection('images').add({
+                        name: 'yo-yan',
+                        age: 28,
+                        url: downloadURL,
+                        createAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    });
+                });
+            }
+        )
+    };
 
     return (
         <Grid container component="main" className={classes.root}>
@@ -148,9 +197,26 @@ export default function SignInSide() {
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
-                        <Button
-                            onClick={clickButton}
+                        <Button onClick={clickButton}
+        <div className='Main'>
+            <div className='Left'>
+                <img src="" alt="" />
+            </div>
+            <input type="file" onChange={(e) => inputFile(e.target.files)} />
+            <div className='Right'>
+                <TextField id="email" label="email" value={email} onChange={e => setEmail(e.target.value)} /><br />
+                <TextField id="password" label="password" value={password} onChange={e => setPassword(e.target.value)} /><br />
+                <button onClick={handleGoogle}>Google Login</button>
+                <button onClick={clickButton}>Login</button>
+                <Link to='/ResetPassword'>パスワードをお忘れの方</Link>
+                <Link to='/Create'>アカウント作成</Link>
 
+            </div>
+        </div>
+    );
+
+};
+<Button
                             type="submit"
                             fullWidth
                             variant="contained"
