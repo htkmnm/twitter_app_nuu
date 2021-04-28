@@ -19,16 +19,14 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const Login = () => {
+
     function Copyright() {
 
         return (
             <Typography variant="body2" color="textSecondary" align="center">
                 {'Copyright © '}
-                <Link color="inherit" href="https://material-ui.com/">
-                    Your Website
-      </Link>{' '}
-                {new Date().getFullYear()}
-                {'.'}
+                <Link color="inherit" href="https://material-ui.com/">Nuu official</Link>{' '}
+                {new Date().getFullYear()}{'.'}
             </Typography>
         );
     }
@@ -64,18 +62,10 @@ const Login = () => {
         },
     }));
 
-
-
-
-
-    const classes = useStyles();
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const cleate = () => { history.push('/Create') }
 
-    const [item, setItem] = useState<File | null>(null);
-
+    const classes = useStyles();
     const history = useHistory();
 
     const handleGoogle = async () => {
@@ -89,7 +79,7 @@ const Login = () => {
     const clickButton = () => {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(() => {
-                console.log('aaaaaaa')
+                console.log('sign in')
                 history.push('/Main')
             }).catch(function (error) {
                 // Handle Errors here.
@@ -109,46 +99,6 @@ const Login = () => {
             });
     };
 
-    //画像、動画　アップロード機能
-    const inputFile = (files: FileList | null) => {
-        const S =
-            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const N = 16;
-        const randomChar =
-            Array.from(crypto.getRandomValues(new Uint32Array(N)))
-                .map((n) => S[n % S.length])
-                .join('');
-        const fileName = randomChar + '_' + item?.name;
-        const uploadItem = firebase
-            .storage()
-            .ref(`images`)
-            .child(fileName)
-            .put(item!);
-        const file: File = files![0];
-        setItem(file);
-
-        uploadItem.on(
-            firebase.storage.TaskEvent.STATE_CHANGED,
-            function () {
-                console.log('uploading...')
-            },
-            function (error) {
-                console.log(error.message)
-            },
-            function () {
-                uploadItem.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-                    console.log('File available at', downloadURL);
-                    firebase.firestore().collection('images').add({
-                        name: 'yo-yan',
-                        age: 28,
-                        url: downloadURL,
-                        createAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    });
-                });
-            }
-        )
-    };
-
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -158,7 +108,7 @@ const Login = () => {
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon />
                     </Avatar>
-                    <Typography component="h1" variant="h5">ログイン</Typography>
+                    <Typography component="h1" variant="h5">Login</Typography>
 
                     <form className={classes.form} noValidate>
                         <TextField
@@ -191,53 +141,28 @@ const Login = () => {
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
-                        <Button onClick={clickButton} />
-                        <div className='Main'>
-                            <div className='Left'>
-                                <img src="" alt="" />
-                            </div>
-                            <input type="file" onChange={(e) => inputFile(e.target.files)} />
-                            <div className='Right'>
-
-                            </div>
-                        </div>
-    );
-
-<Button
+                        <Button
+                            onClick={clickButton}
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
-                            className={classes.submit}
-                        >
-                            Login
-            </Button>
+                            className={classes.submit}>Login</Button>
 
                         <Button
                             onClick={handleGoogle}
-
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
-                            className={classes.submit}
-                        >
-                            google Login
-            </Button>
-                        <Button onClick={cleate}>
-                            cうしえいと
+                            className={classes.submit}>google Login</Button>
 
-                        </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                </Link>
+                                <Link href="/ResetPassword" variant="body2">Forgot password?</Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
+                                <Link href="/Create" variant="body2">{"Create New Acount"}</Link>
                             </Grid>
                         </Grid>
                         <Box mt={5}>
@@ -248,6 +173,6 @@ const Login = () => {
             </Grid>
         </Grid >
     );
-}
+};
 
 export default Login;

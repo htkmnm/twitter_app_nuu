@@ -21,7 +21,7 @@ const Main = ({ name }: any) => {
         userLogout()
         history.push('/')
     };
-    
+
     useEffect(() => {
         //LoginuserNameの表示
         firebase.auth().onAuthStateChanged(function (user) {
@@ -60,6 +60,7 @@ const Main = ({ name }: any) => {
             })
     };
 
+    //画像、動画　アップロード機能
     const inputFile = (files: FileList | null) => {
         const S =
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -117,7 +118,7 @@ const Main = ({ name }: any) => {
                     );
                 })}
             </main>
-        <div className='header'>
+            <div className='header'>
                 <h1>Nuu.Main</h1>
             </div>
             <div className='main'>
