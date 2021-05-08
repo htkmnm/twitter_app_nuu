@@ -100,20 +100,4 @@ export const sendMessage = async (name: any[], message: string[]) => {
         });
 };
 
-export const readData = async () => {
-    await db
-        .collection('messages')
-        .doc('tweet')
-        .collection('tweet')
-        .get()
-        .then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-                console.log(doc.id, " => ", doc.data());
-            });
-        })
-        .catch(function (error) {
-            console.log("Error getting documents: ", error);
-        });
-};
-
 export default firebase;

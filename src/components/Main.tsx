@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom'
 import { userLogout } from '../config/firebase';
 import { Avatar } from '@material-ui/core';
 
-const Main = ({ name }: any) => {
+const Main = ({ message }: any) => {
     const [string, setString] = useState<any>('');
     const [tweet, setTweet] = useState<any>();
     const [item, setItem] = useState<File | null>(null);
@@ -39,17 +39,14 @@ const Main = ({ name }: any) => {
                 // No user is signed in.
             }
         });
-    });
-
-    const handleClick = async () => {
-        sendMessage(name, string)
-        readData()
-    };
-
-    useEffect(() => {
         readData()
         inputEl.current.focus();
     }, []);
+
+    const handleClick = async () => {
+        sendMessage(message, string)
+        readData()
+    };
 
     const readData = async () => {
         const tempArray: any = []
@@ -95,12 +92,14 @@ const Main = ({ name }: any) => {
             function () {
                 uploadItem.snapshot.ref.getDownloadURL().then(function (downloadURL) {
                     console.log('File available at', downloadURL);
-                    firebase.firestore().collection('images').add({
-                        name: 'yo-yan',
-                        age: 28,
-                        url: downloadURL,
-                        createAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    });
+                    firebase.firestore()
+                        .collection('images')
+                        .add({
+                            name: 'yo-yan',
+                            age: 28,
+                            url: downloadURL,
+                            createAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        });
                 });
             }
         )
@@ -108,17 +107,19 @@ const Main = ({ name }: any) => {
 
     return (
         <div>
-            <header>
+            <div className='header'>
                 <TextField className='text' type='text' inputRef={inputEl} id="tweet" label="tweet" value={string} onChange={e => setString(e.target.value)} />
                 <Button variant="outlined" onClick={handleClick}>送信</Button>
                 <input type="file" onChange={(e) => inputFile(e.target.files)} />
-            </header>
-            <main>
+                <h1>Nuu.Main</h1>
+            </div>
+            <div className='main'>
+                {username}
                 {tweet && tweet.map((element: any, index: any) => {
                     return (
                         <ul key={index}>
                             <li>
-                                <div className='namesize'>{element.name}</div> {element.message}
+                                <div>{element.message}</div>
                             </li>
                         </ul>
                     );
