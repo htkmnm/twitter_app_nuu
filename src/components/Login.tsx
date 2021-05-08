@@ -99,6 +99,7 @@ const Login = () => {
             });
     };
 
+
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -109,66 +110,63 @@ const Login = () => {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">Login</Typography>
+                    <TextField
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                    <TextField
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                    />
+                    <FormControlLabel
+                        control={<Checkbox value="remember" color="primary" />}
+                        label="Remember me"
+                    />
+                    <Button
+                        onClick={clickButton}
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}>Login</Button>
 
-                    <form className={classes.form} noValidate>
-                        <TextField
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                        />
-                        <TextField
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            onClick={clickButton}
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}>Login</Button>
+                    <Button
+                        onClick={handleGoogle}
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}>google Login</Button>
 
-                        <Button
-                            onClick={handleGoogle}
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}>google Login</Button>
-
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="/ResetPassword" variant="body2">Forgot password?</Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="/Create" variant="body2">{"Create New Acount"}</Link>
-                            </Grid>
+                    <Grid container>
+                        <Grid item xs>
+                            <Link href="/ResetPassword" variant="body2">Forgot password?</Link>
                         </Grid>
-                        <Box mt={5}>
-                            <Copyright />
-                        </Box>
-                    </form>
+                        <Grid item>
+                            <Link href="/Create" variant="body2">{"Create New Acount"}</Link>
+                        </Grid>
+                    </Grid>
+                    <Box mt={5}>
+                        <Copyright />
+                    </Box>
                 </div>
             </Grid>
         </Grid >
