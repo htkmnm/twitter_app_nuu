@@ -8,13 +8,17 @@ import 'firebase/firestore';
 import firebase from '../config/firebase';
 import { useHistory } from 'react-router-dom'
 import { userLogout } from '../config/firebase';
+import { Avatar } from '@material-ui/core';
 
 const Main = ({ name }: any) => {
     const [string, setString] = useState<any>('');
     const [tweet, setTweet] = useState<any>();
-    const inputEl = useRef<any>(null);
     const [item, setItem] = useState<File | null>(null);
     const [username, setUsername] = useState<string | null>('');
+    const [avater, setAvater] = useState<string | null>('')
+
+    const inputEl = useRef<any>(null);
+
     const history = useHistory();
 
     const logout = async () => {
@@ -27,8 +31,10 @@ const Main = ({ name }: any) => {
         firebase.auth().onAuthStateChanged(function (user) {
             var user = firebase.auth().currentUser;
             console.log(user?.displayName)
+            console.log(user?.photoURL)
             if (user) {
                 setUsername(user?.displayName)
+                setAvater(user?.photoURL)
             } else {
                 // No user is signed in.
             }
@@ -122,6 +128,7 @@ const Main = ({ name }: any) => {
                 <h1>Nuu.Main</h1>
             </div>
             <div className='main'>
+                <Avatar alt="Remy Sharp" src={avater!} />
                 {username}
                 <button onClick={logout}>Logout</button>
             </div>
