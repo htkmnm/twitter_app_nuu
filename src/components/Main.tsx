@@ -42,7 +42,7 @@ const Main = ({ name }: any) => {
     });
 
     const handleClick = async () => {
-        sendMessage(name, string)
+        sendMessage(username!, message)
         readData()
     };
 
@@ -65,6 +65,7 @@ const Main = ({ name }: any) => {
                 setTweet(tempArray)
             })
     };
+    console.log(tweet)
 
     //画像、動画　アップロード機能
     const inputFile = (files: FileList | null) => {

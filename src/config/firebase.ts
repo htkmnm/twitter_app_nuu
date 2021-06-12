@@ -82,15 +82,14 @@ export const resetPassword = async (emailAddress: string) => {
         })
 };
 
-export const sendMessage = async (name: any[], message: string[]) => {
+export const sendMessage = async (name: string, message: string) => {
+    console.log(name, '/', message, 'check')
     await db
         .collection("messages")
-        .doc('tweet')
-        .collection('comment')
         .add({
             name,
             message,
-            createAt: new Date()
+            createAt: new Date(),
         })
         .then(function (docRef) {
             console.log("Document written with ID: ", docRef.id);
