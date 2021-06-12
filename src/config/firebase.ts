@@ -82,7 +82,7 @@ export const resetPassword = async (emailAddress: string) => {
         })
 };
 
-export const sendMessage = async (name: string, message: string) => {
+export const sendMessage = async (name: string, message: string, avater: string) => {
     console.log(name, '/', message, 'check')
     await db
         .collection("messages")
@@ -90,28 +90,13 @@ export const sendMessage = async (name: string, message: string) => {
             name,
             message,
             createAt: new Date(),
+            avater
         })
         .then(function (docRef) {
             console.log("Document written with ID: ", docRef.id);
         })
         .catch(function (error) {
             console.error("Error adding document: ", error);
-        });
-};
-
-export const readData = async () => {
-    await db
-        .collection('messages')
-        .doc('tweet')
-        .collection('tweet')
-        .get()
-        .then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-                console.log(doc.id, " => ", doc.data());
-            });
-        })
-        .catch(function (error) {
-            console.log("Error getting documents: ", error);
         });
 };
 

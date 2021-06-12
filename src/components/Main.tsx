@@ -9,6 +9,7 @@ import firebase from '../config/firebase';
 import { useHistory } from 'react-router-dom'
 import { userLogout } from '../config/firebase';
 import { Avatar } from '@material-ui/core';
+import { Message } from '@material-ui/icons';
 
 const Main = ({ name }: any) => {
     const [string, setString] = useState<any>('');
@@ -42,7 +43,7 @@ const Main = ({ name }: any) => {
     });
 
     const handleClick = async () => {
-        sendMessage(username!, message)
+        sendMessage(username!, string!, avater!)
         readData()
     };
 
