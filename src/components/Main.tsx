@@ -44,7 +44,7 @@ const Main = ({ message }: any) => {
     }, []);
 
     const handleClick = async () => {
-        sendMessage(message, string)
+        sendMessage(username!, string!, avater!)
         readData()
     };
 
@@ -114,19 +114,18 @@ const Main = ({ message }: any) => {
                 <h1>Nuu.Main</h1>
             </div>
             <div className='main'>
-                {username}
                 {tweet && tweet.map((element: any, index: any) => {
                     return (
                         <ul key={index}>
                             <li>
+                                <div>{element.name}</div>
                                 <div>{element.message}</div>
                             </li>
                         </ul>
                     );
                 })}
-            </main>
+            </div>
             <div className='header'>
-                <h1>Nuu.Main</h1>
             </div>
             <div className='main'>
                 <Avatar alt="Remy Sharp" src={avater!} />
