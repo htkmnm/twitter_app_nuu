@@ -124,7 +124,7 @@ const Main = ({ message }: any) => {
                         </ul>
                     );
                 })}
-            </main>
+            </div>
             <div className='header'>
                 <h1>Nuu.Main</h1>
             </div>
