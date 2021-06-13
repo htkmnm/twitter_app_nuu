@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const SimpleModal = () => {
-    return (
-        <div>
+  return <div></div>;
+};
 
-        </div>
-    )
-}
-
-export default SimpleModal
+export default SimpleModal;

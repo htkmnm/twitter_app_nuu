@@ -38,9 +38,6 @@ export const googleLogin = async () => {
         .then((result) => {
             /** @type {firebase.auth.OAuthCredential} */
 
-            // This gives you a Google Access Token. You can use it to access the Google API.
-
-            // The signed-in user info.
             var user = result.user;
             console.log(user?.displayName)
             // ...
