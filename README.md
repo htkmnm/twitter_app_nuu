@@ -1,5 +1,10 @@
 ## Git push までの手順
 
+# コードレビュー
+- SimpleModalを使用しないなら削除をお願いします！
+- Main.tsxの長くなりすぎにご注意ください。
+
+
 ### 以下の手順で push してください！
 
 1. git branch -a
