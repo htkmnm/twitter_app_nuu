@@ -12,8 +12,8 @@ import { Avatar } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Nuuheader from './Nuuheader'
-
+import Nuuheader from './Nuuheader';
+import Message from '../components/Message';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,8 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }),
 );
-
-import Message from '../components/Message'
 
 const Main = ({ name }: any) => {
     const [string, setString] = useState<any>('');
@@ -61,11 +59,9 @@ const Main = ({ name }: any) => {
                 // No user is signed in.
             }
         });
-
         //readData()
         inputEl.current.focus();
     }, []);
-
 
     const handleClick = async () => {
         sendMessage(username!, string!, avater!)
