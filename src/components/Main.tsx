@@ -39,14 +39,17 @@ const Main = ({ message }: any) => {
                 // No user is signed in.
             }
         });
-        readData()
-        inputEl.current.focus();
-    }, []);
+    });
 
     const handleClick = async () => {
         sendMessage(username!, string!, avater!)
         readData()
     };
+
+    useEffect(() => {
+        readData()
+        inputEl.current.focus();
+    }, []);
 
     const readData = async () => {
         const tempArray: any = []
@@ -62,6 +65,7 @@ const Main = ({ message }: any) => {
                 setTweet(tempArray)
             })
     };
+    console.log(tweet)
 
     //画像、動画　アップロード機能
     const inputFile = (files: FileList | null) => {
@@ -92,14 +96,12 @@ const Main = ({ message }: any) => {
             function () {
                 uploadItem.snapshot.ref.getDownloadURL().then(function (downloadURL) {
                     console.log('File available at', downloadURL);
-                    firebase.firestore()
-                        .collection('images')
-                        .add({
-                            name: 'yo-yan',
-                            age: 28,
-                            url: downloadURL,
-                            createAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        });
+                    firebase.firestore().collection('images').add({
+                        name: 'yo-yan',
+                        age: 28,
+                        url: downloadURL,
+                        createAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    });
                 });
             }
         )
@@ -107,17 +109,24 @@ const Main = ({ message }: any) => {
 
     return (
         <div>
-            <div className='header'>
+            <header>
                 <TextField className='text' type='text' inputRef={inputEl} id="tweet" label="tweet" value={string} onChange={e => setString(e.target.value)} />
                 <Button variant="outlined" onClick={handleClick}>送信</Button>
                 <input type="file" onChange={(e) => inputFile(e.target.files)} />
-                <h1>Nuu.Main</h1>
-            </div>
-            <div className='main'>
+            </header>
+            <div>
                 {tweet && tweet.map((element: any, index: any) => {
                     return (
                         <ul key={index}>
                             <li>
+                                <div>
+                                    {element.createAt.toDate().getFullYear().toString()}/
+                                    {(element.createAt.toDate().getMonth() + 1).toString()}/
+                                    {element.createAt.toDate().getDate().toString()}/
+                                    {element.createAt.toDate().getHours().toString()}:
+                                    {element.createAt.toDate().getMinutes().toString()}:
+                                    {element.createAt.toDate().getSeconds().toString()}
+                                </div>
                                 <div>{element.name}</div>
                                 <div>{element.message}</div>
                             </li>

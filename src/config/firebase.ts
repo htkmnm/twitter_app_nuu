@@ -83,13 +83,12 @@ export const resetPassword = async (emailAddress: string) => {
 };
 
 export const sendMessage = async (name: string, message: string, avater: string) => {
-    console.log(name, 'name', message, 'message')
     await db
         .collection("messages")
         .add({
             name,
             message,
-            createAt: new Date(),
+            createAt: firebase.firestore.Timestamp.now(),
             avater
         })
         .then(function (docRef) {
