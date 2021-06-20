@@ -7,11 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import Avatar from '@material-ui/core/Avatar';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
@@ -23,18 +18,8 @@ type propsType = {
     avater: string | null,
     string: string | null,
     tweet: string | null,
-    createAt: string | null
+    createAt: Date | null
 }
-//内容
-const messages = [
-    {
-        username: 1,
-        createAt: 'Brunch this week?',
-        tweet: "I'll be in the neighbourhood this week. Let's grab a bite to eat",
-        avater: '/static/images/avatar/5.jpg',
-    },
-
-];
 //デザイン
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -71,8 +56,6 @@ const useStyles = makeStyles((theme: Theme) =>
 const BottomAppBar: React.FC<propsType> = ({ username, avater, tweet, createAt }) => {
     const classes = useStyles();
 
-    console.log(tweet)
-
     return (
         <React.Fragment>
             <CssBaseline />
@@ -86,7 +69,9 @@ const BottomAppBar: React.FC<propsType> = ({ username, avater, tweet, createAt }
                 <Typography className={classes.text} variant="h5" gutterBottom>
                     {tweet}
                 </Typography>
-
+                <Typography className={classes.text} variant="h5" gutterBottom>
+                    {createAt!.getMonth()}/{createAt!.getDate()}/{createAt!.getHours()}:{createAt!.getMinutes()},{createAt!.getSeconds()}
+                </Typography>
             </Paper>
             <AppBar position="fixed" color="primary" className={classes.appBar}>
                 <Toolbar>
