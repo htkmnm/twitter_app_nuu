@@ -9,6 +9,25 @@ import firebase from '../config/firebase';
 import { useHistory } from 'react-router-dom'
 import { userLogout } from '../config/firebase';
 import { Avatar } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Nuuheader from './Nuuheader'
+
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            '& > *': {
+                margin: theme.spacing(1),
+            },
+        },
+        input: {
+            display: 'none',
+        },
+    }),
+);
+
 import Message from '../components/Message'
 
 const Main = ({ name }: any) => {
@@ -21,6 +40,8 @@ const Main = ({ name }: any) => {
     const inputEl = useRef<any>(null);
 
     const history = useHistory();
+
+    const classes = useStyles();
 
     const logout = async () => {
         userLogout()
@@ -40,6 +61,10 @@ const Main = ({ name }: any) => {
                 // No user is signed in.
             }
         });
+      
+        //readData()
+        inputEl.current.focus();
+    }, []);
     });
 
     const handleClick = async () => {
@@ -109,6 +134,24 @@ const Main = ({ name }: any) => {
 
     return (
         <div>
+            <Nuuheader />
+            <div className='header'>
+                <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+                <label htmlFor="icon-button-file">
+                    <IconButton color="primary" aria-label="upload picture" component="span" >
+                        <PhotoCamera />
+                    </IconButton>
+
+                </label>
+
+                <TextField className='text' type='text' inputRef={inputEl} id="tweet" label="tweet" value={string} onChange={e => setString(e.target.value)} />
+                <Button variant="outlined" onClick={handleClick}>送信</Button>
+                <h1>Nuu.Main</h1>
+            </div>
+
+            <div className='main'>
+                <div className='design'>
+                    <Avatar alt="Remy Sharp" src={avater!} />{username}</div>
             <header>
                 <TextField className='text' type='text' inputRef={inputEl} id="tweet" label="tweet" value={string} onChange={e => setString(e.target.value)} />
                 <Button variant="outlined" onClick={handleClick}>送信</Button>
@@ -130,10 +173,10 @@ const Main = ({ name }: any) => {
             </main>
             <div className='header'>
                 <h1>Nuu.Main</h1>
+
+
             </div>
             <div className='main'>
-                <Avatar alt="Remy Sharp" src={avater!} />
-                {username}
                 <button onClick={logout}>Logout</button>
             </div>
             <div className='footer'>
