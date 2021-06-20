@@ -9,6 +9,25 @@ import firebase from '../config/firebase';
 import { useHistory } from 'react-router-dom'
 import { userLogout } from '../config/firebase';
 import { Avatar } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Nuuheader from './Nuuheader'
+
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            '& > *': {
+                margin: theme.spacing(1),
+            },
+        },
+        input: {
+            display: 'none',
+        },
+    }),
+);
+
 
 const Main = ({ message }: any) => {
     const [string, setString] = useState<any>('');
@@ -20,6 +39,8 @@ const Main = ({ message }: any) => {
     const inputEl = useRef<any>(null);
 
     const history = useHistory();
+
+    const classes = useStyles();
 
     const logout = async () => {
         userLogout()
@@ -39,7 +60,7 @@ const Main = ({ message }: any) => {
                 // No user is signed in.
             }
         });
-        readData()
+        //readData()
         inputEl.current.focus();
     }, []);
 
@@ -107,14 +128,24 @@ const Main = ({ message }: any) => {
 
     return (
         <div>
+            <Nuuheader />
             <div className='header'>
+                <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+                <label htmlFor="icon-button-file">
+                    <IconButton color="primary" aria-label="upload picture" component="span" >
+                        <PhotoCamera />
+                    </IconButton>
+
+                </label>
+
                 <TextField className='text' type='text' inputRef={inputEl} id="tweet" label="tweet" value={string} onChange={e => setString(e.target.value)} />
                 <Button variant="outlined" onClick={handleClick}>送信</Button>
-                <input type="file" onChange={(e) => inputFile(e.target.files)} />
                 <h1>Nuu.Main</h1>
             </div>
+
             <div className='main'>
-                {username}
+                <div className='design'>
+                    <Avatar alt="Remy Sharp" src={avater!} />{username}</div>
                 {tweet && tweet.map((element: any, index: any) => {
                     return (
                         <ul key={index}>
@@ -127,10 +158,10 @@ const Main = ({ message }: any) => {
             </div>
             <div className='header'>
                 <h1>Nuu.Main</h1>
+
+
             </div>
             <div className='main'>
-                <Avatar alt="Remy Sharp" src={avater!} />
-                {username}
                 <button onClick={logout}>Logout</button>
             </div>
             <div className='footer'>

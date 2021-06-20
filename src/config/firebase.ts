@@ -85,8 +85,6 @@ export const resetPassword = async (emailAddress: string) => {
 export const sendMessage = async (name: any[], message: string[]) => {
     await db
         .collection("messages")
-        .doc('tweet')
-        .collection('comment')
         .add({
             name,
             message,
