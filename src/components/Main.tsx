@@ -61,11 +61,11 @@ const Main = ({ name }: any) => {
                 // No user is signed in.
             }
         });
-      
+
         //readData()
         inputEl.current.focus();
     }, []);
-    });
+
 
     const handleClick = async () => {
         sendMessage(username!, string!, avater!)
@@ -152,35 +152,36 @@ const Main = ({ name }: any) => {
             <div className='main'>
                 <div className='design'>
                     <Avatar alt="Remy Sharp" src={avater!} />{username}</div>
-            <header>
-                <TextField className='text' type='text' inputRef={inputEl} id="tweet" label="tweet" value={string} onChange={e => setString(e.target.value)} />
-                <Button variant="outlined" onClick={handleClick}>送信</Button>
-                <input type="file" onChange={(e) => inputFile(e.target.files)} />
-            </header>
-            <main>
-                {tweet && tweet.map((element: any, index: any) => {
-                    return (
-                        <ul key={index}>
-                            <Message
-                                username={element.name}
-                                avater={element.avater}
-                                string={element.string}
-                                tweet={element.message}
-                                createAt={element.createAt} />
-                        </ul>
-                    );
-                })}
-            </main>
-            <div className='header'>
-                <h1>Nuu.Main</h1>
+                <header>
+                    <TextField className='text' type='text' inputRef={inputEl} id="tweet" label="tweet" value={string} onChange={e => setString(e.target.value)} />
+                    <Button variant="outlined" onClick={handleClick}>送信</Button>
+                    <input type="file" onChange={(e) => inputFile(e.target.files)} />
+                </header>
+                <main>
+                    {tweet && tweet.map((element: any, index: any) => {
+                        return (
+                            <ul key={index}>
+                                <Message
+                                    username={element.name}
+                                    avater={element.avater}
+                                    string={element.string}
+                                    tweet={element.message}
+                                    createAt={element.createAt} />
+                            </ul>
+                        );
+                    })}
+                </main>
+                <div className='header'>
+                    <h1>Nuu.Main</h1>
 
 
-            </div>
-            <div className='main'>
-                <button onClick={logout}>Logout</button>
-            </div>
-            <div className='footer'>
+                </div>
+                <div className='main'>
+                    <button onClick={logout}>Logout</button>
+                </div>
+                <div className='footer'>
 
+                </div>
             </div>
         </div>
     )
