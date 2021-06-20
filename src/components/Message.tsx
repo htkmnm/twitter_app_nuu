@@ -17,6 +17,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import SimpleModal from './SimpleModal';
 
 type propsType = {
     username: string | null,
@@ -138,7 +139,12 @@ const BottomAppBar: React.FC<propsType> = () => {
                         <MenuIcon />
                     </IconButton>
                     <Fab color="secondary" aria-label="add" className={classes.fabButton}>
-                        <AddIcon />
+
+
+                        <SimpleModal />
+
+
+
                     </Fab>
                     <div className={classes.grow} />
                     <IconButton color="inherit">
