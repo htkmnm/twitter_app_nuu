@@ -9,7 +9,7 @@ import firebase from '../config/firebase';
 import { useHistory } from 'react-router-dom'
 import { userLogout } from '../config/firebase';
 import { Avatar } from '@material-ui/core';
-import { Message } from '@material-ui/icons';
+import Message from '../components/Message'
 
 const Main = ({ name }: any) => {
     const [string, setString] = useState<any>('');
@@ -66,7 +66,6 @@ const Main = ({ name }: any) => {
                 setTweet(tempArray)
             })
     };
-    console.log(tweet)
 
     //画像、動画　アップロード機能
     const inputFile = (files: FileList | null) => {
@@ -119,9 +118,12 @@ const Main = ({ name }: any) => {
                 {tweet && tweet.map((element: any, index: any) => {
                     return (
                         <ul key={index}>
-                            <li>
-                                <div className='namesize'>{element.name}</div> {element.message}
-                            </li>
+                            <Message
+                                username={element.name}
+                                avater={element.avater}
+                                string={element.string}
+                                tweet={element.message}
+                                createAt={element.createAt} />
                         </ul>
                     );
                 })}
