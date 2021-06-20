@@ -38,9 +38,6 @@ export const googleLogin = async () => {
         .then((result) => {
             /** @type {firebase.auth.OAuthCredential} */
 
-            // This gives you a Google Access Token. You can use it to access the Google API.
-
-            // The signed-in user info.
             var user = result.user;
             console.log(user?.displayName)
             // ...
@@ -82,13 +79,15 @@ export const resetPassword = async (emailAddress: string) => {
         })
 };
 
-export const sendMessage = async (name: any[], message: string[]) => {
+export const sendMessage = async (name: string, message: string, avater: string) => {
+    console.log(name, '/', message, 'check')
     await db
         .collection("messages")
         .add({
             name,
             message,
-            createAt: new Date()
+            createAt: new Date(),
+            avater
         })
         .then(function (docRef) {
             console.log("Document written with ID: ", docRef.id);

@@ -28,8 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+import Message from '../components/Message'
 
-const Main = ({ message }: any) => {
+const Main = ({ name }: any) => {
     const [string, setString] = useState<any>('');
     const [tweet, setTweet] = useState<any>();
     const [item, setItem] = useState<File | null>(null);
@@ -60,14 +61,21 @@ const Main = ({ message }: any) => {
                 // No user is signed in.
             }
         });
+      
         //readData()
         inputEl.current.focus();
     }, []);
+    });
 
     const handleClick = async () => {
-        sendMessage(message, string)
+        sendMessage(username!, string!, avater!)
         readData()
     };
+
+    useEffect(() => {
+        readData()
+        inputEl.current.focus();
+    }, []);
 
     const readData = async () => {
         const tempArray: any = []
@@ -113,14 +121,12 @@ const Main = ({ message }: any) => {
             function () {
                 uploadItem.snapshot.ref.getDownloadURL().then(function (downloadURL) {
                     console.log('File available at', downloadURL);
-                    firebase.firestore()
-                        .collection('images')
-                        .add({
-                            name: 'yo-yan',
-                            age: 28,
-                            url: downloadURL,
-                            createAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        });
+                    firebase.firestore().collection('images').add({
+                        name: 'yo-yan',
+                        age: 28,
+                        url: downloadURL,
+                        createAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    });
                 });
             }
         )
@@ -146,16 +152,25 @@ const Main = ({ message }: any) => {
             <div className='main'>
                 <div className='design'>
                     <Avatar alt="Remy Sharp" src={avater!} />{username}</div>
+            <header>
+                <TextField className='text' type='text' inputRef={inputEl} id="tweet" label="tweet" value={string} onChange={e => setString(e.target.value)} />
+                <Button variant="outlined" onClick={handleClick}>送信</Button>
+                <input type="file" onChange={(e) => inputFile(e.target.files)} />
+            </header>
+            <main>
                 {tweet && tweet.map((element: any, index: any) => {
                     return (
                         <ul key={index}>
-                            <li>
-                                <div>{element.message}</div>
-                            </li>
+                            <Message
+                                username={element.name}
+                                avater={element.avater}
+                                string={element.string}
+                                tweet={element.message}
+                                createAt={element.createAt} />
                         </ul>
                     );
                 })}
-            </div>
+            </main>
             <div className='header'>
                 <h1>Nuu.Main</h1>
 
